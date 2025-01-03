@@ -20,6 +20,7 @@ pbinom(7,10,0.65)
 1-pbinom(5,10,0.65)
 
 #Question 14
+library(tidyverse)
 binom_draws <- as_tibble(data.frame(successes))
 
 estimated_pf <- binom_draws %>%
