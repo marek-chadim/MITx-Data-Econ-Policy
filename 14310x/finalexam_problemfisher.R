@@ -3,7 +3,6 @@
 install.packages('perm')
 library(perm)
 rm(list = ls())
-setwd("/Users/raz/Dropbox/14.31 edX Building the Course/Problem Sets/PSET 8")
 
 # Questions 1 - 4
 #-------------------------------------------------

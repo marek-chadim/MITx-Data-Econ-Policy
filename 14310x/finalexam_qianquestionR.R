@@ -5,9 +5,8 @@ library("Matrix")
 library("lfe")
 
 rm(list = ls())
-setwd("/Users/raz/Dropbox/14.31 edX Building the Course/Final Exam")
 
-qiandata <- read.csv('qian.csv')
+qiandata <- read.csv('data/qian.csv')
 qiandata$post <- (qiandata$biryr >= 1979)
 
 qiandata$teapost <- qiandata$teasown * qiandata$post
