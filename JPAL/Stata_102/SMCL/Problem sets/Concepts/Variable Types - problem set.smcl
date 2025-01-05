@@ -1,0 +1,58 @@
+{smcl}
+{txt}{...}
+{pstd}{c TLC}{hline 43}{c TRC}{break}
+{bf}{...}
+{c |}{view `""Stata 102.smcl""': Innovations for Poverty Action{space 12}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': The Abdul Latif Jameel Poverty Action Lab{space 1}}{c |}{break}
+{c |}{view `""Stata 102.smcl""':{space 43}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Staff Training{space 28}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Stata 102{space 33}}{c |}{break}
+{sf}{...}
+{c BLC}{hline 43}{c BRC}
+
+{pstd}{bf:Variable Types}{break}
+{it:Problem set}{break}
+
+{pstd}{view `""SMCL/Problem sets/Concepts/Variable Types - problem set.smcl"##q1"':Question 1}{break}
+{view `""SMCL/Problem sets/Concepts/Variable Types - problem set.smcl"##q2"':Question 2}{break}
+{view `""SMCL/Problem sets/Concepts/Variable Types - problem set.smcl"##q3"':Question 3}{break}
+
+{hline}{marker q1}
+
+{pstd}{bf:Problem Set Question 1}
+
+{hline}
+
+{pstd}Identify the types of variables in the dataset. How might you go about doing so?
+{txt}{sf}{ul off}{...}
+
+{hline}{marker q2}
+
+{pstd}{bf:Problem Set Question 2}
+
+{hline}
+
+{pstd}Differing restrictions on when you can destring vs. tostring. A: you can always tostring since numerics
+made strings, but not the opposite.
+
+{pstd}{txt}{sf}{ul off}{...}
+
+{hline}{marker q3}
+
+{pstd}{bf:Problem Set Question 3}
+
+{hline}
+
+{pstd}Under what circumstances would you want
+to convert a string variable to numeric?
+How about converting a numeric variable to string?
+
+{pstd}{txt}{sf}{ul off}{...}
+
+
+{hline}
+
+{pstd}{view `""SMCL/Problem sets/Concepts answers/Variable Types - answers.smcl""':Answers}{break}
+Return to Module: {view `""SMCL/Concepts/Loops.smcl""':Loops}{break}
+
+{pstd}{view `""Stata 102.smcl""':Stata 102 Start}{break}

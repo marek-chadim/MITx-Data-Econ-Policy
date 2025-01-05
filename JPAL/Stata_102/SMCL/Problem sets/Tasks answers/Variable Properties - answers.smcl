@@ -1,0 +1,159 @@
+{smcl}
+{txt}{...}
+{pstd}{c TLC}{hline 43}{c TRC}{break}
+{bf}{...}
+{c |}{view `""Stata 102.smcl""': Innovations for Poverty Action{space 12}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': The Abdul Latif Jameel Poverty Action Lab{space 1}}{c |}{break}
+{c |}{view `""Stata 102.smcl""':{space 43}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Staff Training{space 28}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Stata 102{space 33}}{c |}{break}
+{sf}{...}
+{c BLC}{hline 43}{c BRC}
+
+{pstd}{PROPERTIES!}
+{it:Problem set answers}{break}
+
+{pstd}{PROPERTIES_ANSQ1}
+{PROPERTIES_ANSQ2}
+{PROPERTIES_ANSQ3}
+{PROPERTIES_ANSQ4}
+{PROPERTIES_ANSQ5}
+{PROPERTIES_ANSQ6}
+{PROPERTIES_ANSQ7}
+
+
+{pstd}{cmd}{PROPERTIES_Q1}{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}rename * base_*{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}renpfix "" base_{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{p_end}{p_end}
+{pstd}{cmd}rename base_* mid_*{txt}{p_end}
+
+{pstd}{p_end}{p_end}
+{pstd}{cmd}renpfix base_ mid_{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{p_end}{p_end}
+{pstd}{cmd}rename mid_* end_*{txt}{p_end}
+
+{pstd}{p_end}{p_end}
+{pstd}{cmd}renpfix mid_ end_{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q2}{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}describe *_*, fullnames{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}rename (*_1 *_2) (first_* second_*){txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}renvars *_1, prefix(first_){txt}{p_end}
+{pstd}{cmd}renvars *_1, postsub(_1){txt}{p_end}
+
+{pstd}{cmd}renvars *_2, prefix(second_){txt}{p_end}
+{pstd}{cmd}renvars *_2, postsub(_2){txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}describe *_*, fullnames{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q3}{txt}{p_end}
+
+{pstd}{cmd}label values robberyyn assaultyn falsecaseyn yesno{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q4}{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}describe educ{txt}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{cmd}label list standard{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q5TOP}{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q5A}{txt}{p_end}
+
+{pstd}{cmd}generate over40 = 0 if age != .{txt}{p_end}
+{pstd}{cmd}replace{space 2}over40 = 1 if age > 40 & age != .{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}tabulate over40{txt}{p_end}
+{pstd}{cmd}summarize age if age <= 40{txt}{p_end}
+{pstd}{cmd}summarize age if age > 40{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q5B}{txt}{p_end}
+
+{pstd}{cmd}label list{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{cmd}label values over40 yes1no0{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q6TOP}{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q6A}{txt}{p_end}
+
+{pstd}{cmd}generate addressdays = .{txt}{p_end}
+{pstd}{cmd}replace addressdays = addressdur{space 15}if addressdur_unit == 1{txt}{p_end}
+{pstd}{cmd}replace addressdays = addressdur * 7{space 11}if addressdur_unit == 2{txt}{p_end}
+{pstd}{cmd}replace addressdays = addressdur * 365.25 / 12 if addressdur_unit == 3{txt}{p_end}
+{pstd}{cmd}replace addressdays = addressdur * 365.25{space 6}if addressdur_unit == 4{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q6B}{txt}{p_end}
+
+{pstd}{cmd}summarize addressdays{txt}{p_end}
+
+{pstd}{cmd}{PROPERTIES_Q7}{txt}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{p_end}
+
+{pstd}{p_end}
+{pstd}{p_end}
+
+{pstd}{p_end}

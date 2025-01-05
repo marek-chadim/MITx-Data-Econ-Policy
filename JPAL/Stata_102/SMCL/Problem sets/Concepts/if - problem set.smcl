@@ -1,0 +1,113 @@
+{smcl}
+{txt}{...}
+{pstd}{c TLC}{hline 43}{c TRC}{break}
+{bf}{...}
+{c |}{view `""Stata 102.smcl""': Innovations for Poverty Action{space 12}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': The Abdul Latif Jameel Poverty Action Lab{space 1}}{c |}{break}
+{c |}{view `""Stata 102.smcl""':{space 43}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Staff Training{space 28}}{c |}{break}
+{c |}{view `""Stata 102.smcl""': Stata 102{space 33}}{c |}{break}
+{sf}{...}
+{c BLC}{hline 43}{c BRC}
+
+{pstd}{IF!}
+{it:Problem set}{break}
+
+{pstd}{IF_PSQ1}
+{IF_PSQ2}
+{IF_PSQ3}
+
+
+{hline}{marker q1}
+
+{pstd}{bf:Problem Set Question 1}
+
+{hline}
+
+{pstd}{bf:{stata `"use "Raw/Stata 102", clear"'}}{p_end}
+
+{pstd}Which {cmd:if} should be used: the {cmd:if} command or the {cmd:if} qualifier?
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(a)}
+
+{pstd}List the genders of respondents less than {cmd:30}.
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(b)}
+
+{pstd}Determine the number of values of {cmd:sex} that are less than {cmd:0}
+and save it in a local.
+If this number is greater than {cmd:0}, {cmd:summarize sex}.
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(c)}
+
+{pstd}{help tabulate oneway:Tabulate} the occupation frequencies of women.
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(d)}
+
+{pstd}Determine the number of values of {cmd:sex} that are less than {cmd:0}
+and save it in a local.
+If this number is greater than {cmd:0},
+list the values of {cmd:hhid} for which {cmd:sex} is less than {cmd:0}.
+{txt}{sf}{ul off}{...}
+
+{hline}{marker q2}
+
+{pstd}{bf:Problem Set Question 2}
+
+{hline}
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(a)}
+
+{pstd}How can you tell whether a command allows the {cmd:if} qualifier?
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(b)}
+
+{pstd}Name a command that allows the {cmd:if} qualifier (besides {cmd:summarize})
+and another that does not (other than {cmd:display}).
+{txt}{sf}{ul off}{...}
+
+{hline}{marker q3}
+
+{pstd}{bf:Problem Set Question 3}
+
+{hline}
+
+{pstd}{bf:{stata `"use "Raw/Stata 102", clear"'}}{p_end}
+{pstd}{txt}{sf}{ul off}{...}
+
+{pstd}For the following questions, be sure to have the (fully) duplicated {bf:hhid} observations dropped:
+
+{pstd}{bf:{stata `"duplicates drop"'}}{p_end}
+
+{pstd}{bf:(a)}
+
+{pstd}There are two observations with {cmd:hhid "1813023"}.
+If they differ on the variable {cmd:surveyid},
+have Stata display {cmd:"Difference!"}.
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(b)}
+
+{pstd}What are all the variables
+on which the observations with {cmd:hhid "1813023"} differ?
+{txt}{sf}{ul off}{...}
+
+{pstd}{bf:(c)}
+
+{pstd}Get Stata to count the number of variables
+on which the observations with {cmd:hhid "1813023"} differ.
+{txt}{sf}{ul off}{...}
+
+
+{hline}
+
+{pstd}{IF_ANS2}
+Return to Module: {IF}
+
+{pstd}{view `""Stata 102.smcl""':Stata 102 Start}{break}
