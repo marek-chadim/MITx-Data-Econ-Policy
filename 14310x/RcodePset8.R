@@ -1,9 +1,10 @@
 # Load data
 
 rm(list = ls())
+#install.packages('car')
 library(car)
-setwd("/Users/raz/Dropbox/14.31 edX Building the Course/Problem Sets/PSET 9")
-nlsw88 <- read.csv('nlsw88.csv')
+nlsw88 <- read.csv('data/nlsw88.csv')
+head(nlsw88)
 
 #covariance
 cov_yx <- cov(nlsw88$lwage, nlsw88$yrs_school)  
@@ -49,6 +50,13 @@ pvalue
 
 matrixR <- c(0, -2, 1)
 linearHypothesis(multi, matrixR)
+
+nlsw88$mincer_rest <- nlsw88$yrs_school + 2*nlsw88$ttl_exp
+
+model_u <- lm(lwage ~ ttl_exp + yrs_school, data = nlsw88)
+model_r <- lm(lwage ~ mincer_rest , data = nlsw88)
+
+anova(model_u, model_r)
 
 
 

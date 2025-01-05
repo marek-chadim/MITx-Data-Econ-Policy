@@ -1,105 +1,85 @@
 # Preliminaries
 #-------------------------------------------------
 rm(list = ls())
-setwd("[SET YOUR WORKING DIRECTORY]")
-
-#-------Difference in Difference-------
-fastfood <- read.csv('fastfood.csv')
-#Question 1 - 5
-model1 <- lm(empft ~ state, data = fastfood)
-model2 <- lm(emppt ~ state, data = fastfood)
-model3 <- lm(wage_st ~ state, data = fastfood)
-summary(model1) #gives output for Question 1
-summary(model2) 
-summary(model3) #gives output for Question 3
-4.62863 - 0.02123 #Question 4
-
-#Question 9
-fastfood$diff_empft <- fastfood$empft2-fastfood$empft
-model5 <- lm(diff_empft ~ state, data = fastfood)
-summary(model5)
-
-#-------Regression Discontinuity-------
-install.packages("rdd")
+library(car)
 library(rdd)
-library(dplyr)
-indiv <- read.csv('indiv_final.csv')
-#Question 11
-#Note: there are many ways to do this
-indiv$above <- as.numeric(indiv$difshare > 0)
-summary(indiv$above) 
 
-#Question 12-13
-DCdensity(indiv$difshare, 0, ext.out=TRUE)
+#-------2LS Estimates-------
+census80 <- read.csv('data/census80.csv')
+#Question 1
+summary(census80)
 
-#Question 14-15
-#Parametric Regression
-matrix_coef <- matrix(NA, nrow = 2, ncol = 7)
+#Question 2
+census80$temp[census80$ageq2nd == census80$ageq3rd] <- 1
+census80$multiple <- 0
+census80$multiple[census80$temp == 1] <- 1
+summary(census80$multiple)
 
-indiv <- indiv %>%
-  mutate(X1 = difshare,
-         X2 = difshare^2,
-         X3 = difshare ^3,
-         X4 = X1*above,
-         X5 = X2*above,
-         X6 = X3*above)
+#Question 3
+census80$samesextemp <- (census80$sex1st == census80$sex2nd)
+census80$samesex[census80$samesextemp == FALSE] <- 0
+census80$samesex[census80$samesextemp == TRUE] <- 1
+summary(census80$samesex)
 
+#Question 4
+census80$three <- as.numeric(census80$numberkids == 3)
+OLS <- matrix(NA, nrow = 2, ncol = 2)
 
-model <- lm(myoutcomenext ~ above, data = indiv, subset = abs(difshare) <= 0.5)
-matrix_coef[1, 1] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 1] <- pvalue$coefficients[2, 4]
+ols1 <- lm(workedm ~ three + blackm + hispm + othracem, data = census80)
+OLS[1, 1] <- ols1$coefficients[2]
+pvalue <- summary(ols1)
+OLS[2, 1] <- pvalue$coefficients[2, 4]
 
-model <- lm(myoutcomenext ~ above + X1, data = indiv, subset = abs(difshare) <= 0.5)
-matrix_coef[1, 2] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 2] <- pvalue$coefficients[2, 4]
+ols2 <- lm(weeksm ~ three + blackm + hispm + othracem, data = census80)
+OLS[1, 2] <- ols2$coefficients[2]
+pvalue <- summary(ols2)
+OLS[2, 2] <- pvalue$coefficients[2, 4]
+OLS
 
-model <- lm(myoutcomenext ~ above + X1 + X4, data = indiv, subset = abs(difshare) <= 0.5)
-matrix_coef[1, 3] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 3] <- pvalue$coefficients[2, 4]
+#Question 5 - 6
+#First Stage
+FirstStage <- matrix(NA, nrow = 2, ncol = 2)
+#------------------------------
+firststage1 <- lm(three ~ multiple + blackm + hispm + othracem, data = census80)
+FirstStage[1, 1] <- firststage1$coefficients[2]
+pvalue <- summary(firststage1)
+FirstStage[2, 1] <- pvalue$coefficients[2, 4]
 
-model <- lm(myoutcomenext ~ above + X1 + X2, data = indiv, subset = abs(difshare) <= 0.5)
-matrix_coef[1, 4] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 4] <- pvalue$coefficients[2, 4]
+firststage2 <- lm(three ~ samesex + blackm + hispm + othracem, data = census80)
+FirstStage[1, 2] <- firststage2$coefficients[2]
+pvalue <- summary(firststage2)
+FirstStage[2, 2] <- pvalue$coefficients[2, 4]
+FirstStage
 
-model <- lm(myoutcomenext ~ above + X1 + X2 + X4 + X5, data = indiv, 
-            subset = abs(difshare) <= 0.5)
-matrix_coef[1, 5] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 5] <- pvalue$coefficients[2, 4]
+#Question 7
+#IV model using multiple pregnancy
+IVa <- matrix(NA, nrow = 2, ncol = 2)
+#-----------------------------------------------
+iva1 <- ivreg(workedm ~ three + blackm + hispm + othracem |
+                blackm + hispm + othracem + multiple, data = census80)
+IVa[1, 1] <- iva1$coefficients[2]
+pvalue <- summary(iva1)
+IVa[2, 1] <- pvalue$coefficients[2, 4]
 
-model <- lm(myoutcomenext ~ above + X1 + X2 + X3, data = indiv, 
-            subset = abs(difshare) <= 0.5)
-matrix_coef[1, 6] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 6] <- pvalue$coefficients[2, 4]
+iva2 <- ivreg(weeksm ~ three + blackm + hispm + othracem |
+                blackm + hispm + othracem + multiple, data = census80)
+IVa[1, 2] <- iva2$coefficients[2]
+pvalue <- summary(iva2)
+IVa[2, 2] <- pvalue $coefficients[2, 4]
+IVa
 
-model <- lm(myoutcomenext ~ above + X1 + X2 + X3 + X4 + X5 + X6, data = indiv, 
-            subset = abs(difshare) <= 0.5)
-matrix_coef[1, 7] <- model$coefficients[2]
-pvalue <- summary(model)
-matrix_coef[2, 7] <- pvalue$coefficients[2, 4]
+#Question 8
+IVb <- matrix(NA, nrow = 2, ncol = 2)
+#-------------------------------------------------
+ivb1 <- ivreg(workedm ~ three + blackm + hispm + othracem |
+                blackm + hispm + othracem + samesex, data = census80)
+IVb[1, 1] <- ivb1$coefficients[2]
+pvalue <- summary(ivb1)
+IVb[2, 1] <- pvalue$coefficients[2, 4]
 
-matrix_coef
-
-#Question 16-17
-model <- RDestimate(myoutcomenext~difshare, data=indiv, subset = abs(indiv$difshare) <=0.5)
-summary(model)
-
-#Question 18
-#Plot A
-model1 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset = abs(indiv$difshare) <=0.5)
-plot(model1)
-
-#Plot B
-model2 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset=abs(indiv$difshare) <=0.5,
-                     kernel = "rectangular", bw = model1$bw*3)
-plot(model2)
-
-#Plot C
-model3 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset=abs(indiv$difshare) <=0.5,
-                     kernel = "rectangular", bw = model1$bw/3)
-plot(model3)
+ivb2 <- ivreg(weeksm ~ three + blackm + hispm + othracem |
+                blackm + hispm + othracem + samesex, data = census80)
+IVb[1, 2] <- ivb2$coefficients[2]
+pvalue <- summary(ivb2)
+IVb[2, 2] <- pvalue$coefficients[2, 4]
+IVb

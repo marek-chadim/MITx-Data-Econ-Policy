@@ -1,96 +1,106 @@
 # Preliminaries
 #-------------------------------------------------
-#install.packages('perm')
-library(perm)
-library(modelr)
-library(np)
-library(tidyverse)
 rm(list = ls())
-setwd("")
 
-# Questions 1 - 4
-#-------------------------------------------------
+#-------Difference in Difference-------
+fastfood <- read.csv('data/fastfood.csv')
+head(fastfood)
 
-#Q1
-perms <- chooseMatrix(8,4)
-A <- matrix(c(0.462, 0.731, 0.571, 0.923, 0.333, 0.750, 0.893, 0.692), nrow=8, ncol=1, byrow=TRUE)
-treatment_avg <- (1/4)*perms%*%A
-control_avg <- (1/4)*(1-perms)%*%A
-test_statistic <- abs(treatment_avg-control_avg)
-rownumber <- apply(apply(perms, 1, 
-                         function(x) (x == c(0, 1, 0, 0, 0, 1, 1, 1))), 
-                   2, sum)
+#Question 1 - 5
+model1 <- lm(empft ~ state, data = fastfood)
+model2 <- lm(emppt ~ state, data = fastfood)
+model3 <- lm(wage_st ~ state, data = fastfood)
+summary(model1) #gives output for Question 1
+summary(model2) 
+summary(model3) #gives output for Question 3
+4.62863 - 0.02123 #Question 4
 
-#Q2
-observed_test <- test_statistic[rownumber == 8]
+#Question 9
+fastfood$diff_empft <- fastfood$empft2-fastfood$empft
+model5 <- lm(diff_empft ~ state, data = fastfood)
+summary(model5)
 
+#-------Regression Discontinuity-------
+#install.packages("rdd")
+library(rdd)
+library(dplyr)
+indiv <- read.csv('data/indiv_final.csv')
+#Question 11
+#Note: there are many ways to do this
+indiv$above <- as.numeric(indiv$difshare > 0)
+summary(indiv$above) 
 
-#Q3-Q4
-larger_than_observed <- (test_statistic >= observed_test)
-#numbers in which the statistic exceeds the value in the observed date
-sum(larger_than_observed)
-df <- data.frame(perms,control_avg,treatment_avg,test_statistic)
+#Question 12-13
+DCdensity(indiv$difshare, 0, ext.out=TRUE)
 
+#Question 14-15
+#Parametric Regression
+matrix_coef <- matrix(NA, nrow = 2, ncol = 7)
 
-# Question 5 - 6
-#-------------------------------------------------
-simul_stat <- as.vector(NULL)
-schools <- read.csv('teachers_final.csv')
-set.seed(1001)
-for(i in 1:1000) {
-  print(i)
-  schools$rand <- runif(100,min=0,max=1)
-  schools$treatment_rand <- as.numeric(rank(schools$rand)<=49)
-  schools$control_rand = 1-schools$treatment_rand
-  simul_stat <-append(simul_stat,
-            sum(schools$treatment_rand*schools$open)/sum(schools$treatment_rand) 
-            - sum(schools$control_rand*schools$open)/sum(schools$control_rand))
-}
-
-schools$control = 1-schools$treatment
-actual_stat <- sum(schools$treatment*schools$open)/sum(schools$treatment) - sum(schools$control*schools$open)/sum(schools$control)
-sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
-
-#Question 7 - 8
-#---------------------------------------------------
-#Printing the ATE 
-ate <- actual_stat
-
-control_mean <- sum(schools$control*schools$open)/sum(schools$control)
-treatment_mean <- sum(schools$treatment*schools$open)/sum(schools$treatment)
-
-s_c <- (1/(sum(schools$control)-1))*sum(((schools$open-control_mean)*schools$control)^2)
-s_t <- (1/(sum(schools$treatment)-1))*sum(((schools$open-treatment_mean)*schools$treatment)^2)
-
-Vneyman <- (s_c/sum(schools$control) + s_t/sum(schools$treatment))
-print(sqrt(Vneyman))
-print(actual_stat/sqrt(Vneyman))
-
-print(actual_stat-1.96*sqrt(Vneyman))
-print(actual_stat+1.96*sqrt(Vneyman))
+indiv <- indiv %>%
+  mutate(X1 = difshare,
+         X2 = difshare^2,
+         X3 = difshare ^3,
+         X4 = X1*above,
+         X5 = X2*above,
+         X6 = X3*above)
 
 
-#Question 15
-#---------------------------------------------------
-attach(schools)
-bw_a <-npreg(xdat=pctpostwritten, ydat= open, bws=0.04,bandwidth.compute=FALSE)
-plot(bw_a)
+model <- lm(myoutcomenext ~ above, data = indiv, subset = abs(difshare) <= 0.5)
+matrix_coef[1, 1] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 1] <- pvalue$coefficients[2, 4]
 
-bw_b <-npreg(xdat=pctpostwritten, ydat= open, bws=0.001,bandwidth.compute=FALSE)
-plot(bw_b)
+model <- lm(myoutcomenext ~ above + X1, data = indiv, subset = abs(difshare) <= 0.5)
+matrix_coef[1, 2] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 2] <- pvalue$coefficients[2, 4]
 
-bw_c <-npreg(xdat=pctpostwritten, ydat= open, bws=1,bandwidth.compute=FALSE)
-plot(bw_c)
+model <- lm(myoutcomenext ~ above + X1 + X4, data = indiv, subset = abs(difshare) <= 0.5)
+matrix_coef[1, 3] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 3] <- pvalue$coefficients[2, 4]
 
-bw_d <-npreg(xdat=pctpostwritten, ydat= open, bws=20,bandwidth.compute=FALSE)
-plot(bw_d)
+model <- lm(myoutcomenext ~ above + X1 + X2, data = indiv, subset = abs(difshare) <= 0.5)
+matrix_coef[1, 4] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 4] <- pvalue$coefficients[2, 4]
 
+model <- lm(myoutcomenext ~ above + X1 + X2 + X4 + X5, data = indiv, 
+            subset = abs(difshare) <= 0.5)
+matrix_coef[1, 5] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 5] <- pvalue$coefficients[2, 4]
 
-#Question 18 
-#---------------------------------------------------
-schools$group[schools$treatment==1] <-"T"
-schools$group[schools$treatment==0] <-"C"
-ggplot(schools, aes(open,colour = group)) + stat_ecdf()
+model <- lm(myoutcomenext ~ above + X1 + X2 + X3, data = indiv, 
+            subset = abs(difshare) <= 0.5)
+matrix_coef[1, 6] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 6] <- pvalue$coefficients[2, 4]
 
+model <- lm(myoutcomenext ~ above + X1 + X2 + X3 + X4 + X5 + X6, data = indiv, 
+            subset = abs(difshare) <= 0.5)
+matrix_coef[1, 7] <- model$coefficients[2]
+pvalue <- summary(model)
+matrix_coef[2, 7] <- pvalue$coefficients[2, 4]
 
+matrix_coef
 
+#Question 16-17
+model <- RDestimate(myoutcomenext~difshare, data=indiv, subset = abs(indiv$difshare) <=0.5)
+summary(model)
+
+#Question 18
+#Plot A
+model1 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset = abs(indiv$difshare) <=0.5)
+plot(model1)
+
+#Plot B
+model2 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset=abs(indiv$difshare) <=0.5,
+                     kernel = "rectangular", bw = model1$bw*3)
+plot(model2)
+
+#Plot C
+model3 <- RDestimate(myoutcomenext ~ difshare, data = indiv, subset=abs(indiv$difshare) <=0.5,
+                     kernel = "rectangular", bw = model1$bw/3)
+plot(model3)
