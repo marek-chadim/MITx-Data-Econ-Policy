@@ -20,8 +20,6 @@ cap log close
 
 *Set the directory
 
-cd "C:\Documents and Settings\asolomon\Desktop"
-
 *Insheet the data
 
 insheet using "intro.xls"

@@ -23,7 +23,7 @@ some of the common practices for do-file organization
 
 *Opening the data:
 	
-	use "C:\Documents and Settings\asolomon\Desktop/intro.dta"
+	use "intro.dta"
 	
 *Avg of the attendance rate & frequency
 
