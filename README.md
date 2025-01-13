@@ -1,4 +1,4 @@
-# Master’s in Data, Economics, and Design of Policy (DEDP) [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
+# Online Coursework [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
 
 JPAL 102x: Designing and Running Randomized Evaluations;
 Instructors: Rachel Glennerster and 12 J-PAL affiliates
