@@ -1,10 +1,10 @@
 # Data, Economics, and Design of Policy [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
 
-MITx 14.310x: Data Science for Social Scientists;
-Instructors: Esther Duflo and Sara Ellison
-
 JPAL 102x: Designing and Running Randomized Evaluations;
 Instructors: Rachel Glennerster and 12 J-PAL affiliates
+
+MITx 14.310x: Data Science for Social Scientists;
+Instructors: Esther Duflo and Sara Ellison
 
 MITx 14.100x: Microeonomics;
 Instructor: Jonathan Gruber
