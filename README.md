@@ -1,4 +1,4 @@
-#[Master’s in Data, Economics, and Design of Policy (DEDP)](https://economics.mit.edu/academic-programs/masters-programs/masters-data-economics-and-design-policy-dedp)
+# [Master’s in Data, Economics, and Design of Policy (DEDP)](https://economics.mit.edu/academic-programs/masters-programs/masters-data-economics-and-design-policy-dedp)
 
 Online Coursework
 
