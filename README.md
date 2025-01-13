@@ -1,17 +1,14 @@
 # Data, Economics, and Design of Policy [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
-
-## Core Courses
-
-### MITx 14.100: Microeonomics
+MITx 14.100: Microeonomics
 Instructor: Jonathan Gruber
 
-### JPAL 102x: Designing and Running Randomized Evaluations
+JPAL 102x: Designing and Running Randomized Evaluations
 Instructors: Rachel Glennerster and 12 J-PAL affiliates
 
-### MITx 14.310x: Data Science for Social Scientists
+MITx 14.310x: Data Science for Social Scientists
 Instructors: Esther Duflo and Sara Ellison
 
-## International Development Track Elective Courses
+International Development Track Elective Courses
 MITx 14.73x: Challenges of Global Poverty
 Instructors: Abhijit Banerjee and Esther Duflo
 
@@ -21,7 +18,7 @@ Instructors: Abhijit Banerjee, Esther Duflo, and Benjamin Olken
 MITx 14.750x: Political Economy and Economic Development (Advanced)
 Instructors: Abhijit Banerjee and Benjamin Olken
 
-### Public Policy Track Elective Courses
+Public Policy Track Elective Courses
 MITx 14.009x: Good Economics for Hard Times
 Instructors: Abhijit Banerjee and Esther Duflo
 
