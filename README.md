@@ -1,10 +1,13 @@
-# Data, Economics, and Design of Policy [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
+# Master’s in Data, Economics, and Design of Policy (DEDP) [https://micromasters.mit.edu/dedp/](https://micromasters.mit.edu/dedp/)
 
 JPAL 102x: Designing and Running Randomized Evaluations;
 Instructors: Rachel Glennerster and 12 J-PAL affiliates
 
 MITx 14.310x: Data Science for Social Scientists;
 Instructors: Esther Duflo and Sara Ellison
+
+MITx 14.100: Microeonomics;
+Instructor: Jonathan Gruber
 
 MITx 14.003x: Microeconomic Theory and Public Policy;
 Instructor: David Autor
