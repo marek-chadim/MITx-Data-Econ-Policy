@@ -6,9 +6,6 @@ Instructors: Rachel Glennerster and 12 J-PAL affiliates
 MITx 14.310x: Data Science for Social Scientists;
 Instructors: Esther Duflo and Sara Ellison
 
-MITx 14.100x: Microeonomics;
-Instructor: Jonathan Gruber
-
 MITx 14.003x: Microeconomic Theory and Public Policy;
 Instructor: David Autor
 
